@@ -2,15 +2,14 @@ import google.generativeai as genai
 import os
 import logging
 from django.conf import settings
-import json
-#import spacy
-#from transformers import pipeline
-import nlp
+import spacy
+from transformers import pipeline
+
 
 logger = logging.getLogger(__name__)
 
 # Configuration de l'API Gemini
-api_key = os.getenv("GENAI_API_KEY")
+api_key = ("AIzaSyClXnQlAqKXSdvp_jXAg82OlRow6PAVHI8")
 genai.configure(api_key=api_key)
 
 generation_config = {
@@ -88,7 +87,7 @@ def categorize_skills_with_kano(text_offre):
         logger.error(f"Erreur lors de la catégorisation des compétences: {e}")
         return None
 
-pipeline =   0
+
 # Détecter le texte généré par une IA
 def load_ai_detector():
     try:
@@ -115,7 +114,7 @@ def detect_ai_generated_text(text):
 # Analyser le style du texte
 def analyze_text_style(text):
     try:
-        #nlp = spacy.load("en_core_web_sm")
+        nlp = spacy.load("en_core_web_sm")
         doc = nlp(text)
         avg_sentence_length = sum(len(sent) for sent in doc.sents) / len(list(doc.sents)) if list(doc.sents) else 0
         unusual_words = [token.text for token in doc if token.is_alpha and len(token.text) > 12]
